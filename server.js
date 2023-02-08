@@ -42,13 +42,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.get('/auth/google', 
-  passport.authenticate('google', { scope: [ 'email', 'profile' ]}));
+  passport.authenticate('google', { scope: [ 'email', 'profile' ]})
+);
   
-  app.get('/auth/google/callback', (req, res) => {
-    res.send(`I'm back from Google!`);
-  });
+  // app.get('/auth/google/callback', (req, res) => {
+  //   res.send(`I'm back from Google!`);
+  // });
 
-  app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/user/no-permission' }),
+app.get('/auth/callback', passport.authenticate('google', { failureRedirect: '/user/no-permission' }),
   (req, res) => {
     res.redirect('/user/logged');
   }
